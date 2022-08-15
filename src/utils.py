@@ -1,0 +1,61 @@
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import torch
+import os
+import pandas as pd
+from time import gmtime, strftime
+
+
+
+def save_res(res_dict, out_dir, mode):
+    
+    time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    df = pd.DataFrame(os.path.join(out_dir, f'{mode}_pred_{time}.csv'))
+
+
+def run_model(data_sample, 
+              model_name="distilbert-base-uncased-finetuned-sst-2-english"):
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(model_name)
+    
+    res_dict = {'pred':[], 'act':[]}
+    for i in range(data_sample['text']):
+    
+        inp = tokenizer(data_sample['text'][i], return_tensors="pt", truncation=True)
+        
+        with torch.no_grad():
+            logits = model(**inp).logits
+            
+        pred = logits.argmax().item()
+        res_dict['pred'].append(pred)
+        res_dict['act'].append(data_sample['label'][i])
+        
+    save_res(res_dict, TODO, 'live')
+    
+    return res
+
+def run_shadow_model(data_sample, 
+                     model_name="cardiffnlp/twitter-roberta-base-sentiment"):
+                     
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(model_name)
+    
+    res_dict = {'pred':[], 'act':[]}
+    for i in range(data_sample['text']):
+    
+        inp = tokenizer(data_sample['text'][i], return_tensors="pt", truncation=True)
+        
+        with torch.no_grad():
+            logits = model(**inp).logits
+        
+        if logits[0] > logits[2]:
+            pred = 0
+        else:
+            pred = 1
+
+        res_dict['pred'].append(pred)
+        res_dict['act'].append(data_sample['label'][i])
+        
+    save_res(res_dict, TODO, 'shadow')
+    
+    return res                    
