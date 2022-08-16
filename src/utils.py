@@ -11,7 +11,7 @@ def save_res(res_dict, out_dir, mode):
     
     time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     df = pd.DataFrame(res_dict)
-    df.to_csv(f'{out_dir}/{mode}_pred_{time}.csv'), index=False)
+    df.to_csv(f'{out_dir}/{mode}_pred_{time}.csv', index=False)
 
 
 def run_model(data_sample, 
