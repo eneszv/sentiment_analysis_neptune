@@ -21,7 +21,7 @@ def run_model(data_sample,
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
     
     res_dict = {'pred':[], 'act':[]}
-    for i in range(data_sample['text']):
+    for i in range(len(data_sample['text'])):
     
         inp = tokenizer(data_sample['text'][i], return_tensors="pt", truncation=True)
         
@@ -44,7 +44,7 @@ def run_shadow_model(data_sample,
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
     
     res_dict = {'pred':[], 'act':[]}
-    for i in range(data_sample['text']):
+    for i in range(len(data_sample['text'])):
     
         inp = tokenizer(data_sample['text'][i], return_tensors="pt", truncation=True)
         
