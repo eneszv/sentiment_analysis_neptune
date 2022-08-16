@@ -8,8 +8,8 @@ def get_data(n_samples = 10):
     idx = random.sample(range(len(dataset['text'])), n_samples)
 
     data_dict = {
-        'text': [dataset['train']['text'][i] for i in idx],
-        'labels': [dataset['train']['label'][i] for i in idx]
+        'text': [dataset['text'][i] for i in idx],
+        'labels': [dataset['label'][i] for i in idx]
     }
     
     return data_sample
