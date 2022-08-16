@@ -1,5 +1,5 @@
 pandas
-torch
+pytorch
 transformers
 datasets
 s3fs
