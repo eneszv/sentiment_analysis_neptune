@@ -35,7 +35,7 @@ def run_model(data_sample,
         
     save_res(res_dict, out_dir, 'live')
     
-    return res
+    return res_dict
 
 def run_shadow_model(data_sample, 
                      model_name="cardiffnlp/twitter-roberta-base-sentiment", 
