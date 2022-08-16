@@ -12,6 +12,6 @@ def get_data(n_samples = 10):
         'labels': [dataset['label'][i] for i in idx]
     }
     
-    return data_sample
+    return data_dict
 
 
