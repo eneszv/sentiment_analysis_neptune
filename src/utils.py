@@ -3,6 +3,7 @@ import torch
 import os
 import pandas as pd
 from time import gmtime, strftime
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 
 
@@ -13,7 +14,8 @@ def save_res(res_dict, out_dir, mode):
 
 
 def run_model(data_sample, 
-              model_name="distilbert-base-uncased-finetuned-sst-2-english"):
+              model_name="distilbert-base-uncased-finetuned-sst-2-english"
+              out_dir='s3://experimental/sentiment-analyis-data/live'):
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -30,12 +32,13 @@ def run_model(data_sample,
         res_dict['pred'].append(pred)
         res_dict['act'].append(data_sample['label'][i])
         
-    save_res(res_dict, TODO, 'live')
+    save_res(res_dict, out_dir, 'live')
     
     return res
 
 def run_shadow_model(data_sample, 
-                     model_name="cardiffnlp/twitter-roberta-base-sentiment"):
+                     model_name="cardiffnlp/twitter-roberta-base-sentiment", 
+                     out_dir='s3://experimental/sentiment-analyis-data/shadow'):
                      
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -56,6 +59,6 @@ def run_shadow_model(data_sample,
         res_dict['pred'].append(pred)
         res_dict['act'].append(data_sample['label'][i])
         
-    save_res(res_dict, TODO, 'shadow')
+    save_res(res_dict, out_dir, 'shadow')
     
     return res                    
