@@ -11,12 +11,12 @@ def save_res(res_dict, out_dir, mode):
     
     time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     df = pd.DataFrame(res_dict)
-    df.to_csv(os.path.join(out_dir, f'{mode}_pred_{time}.csv'), index=False)
+    df.to_csv(f'{out_dir}/{mode}_pred_{time}.csv'), index=False)
 
 
 def run_model(data_sample, 
               model_name="distilbert-base-uncased-finetuned-sst-2-english",
-              out_dir='s3://experimental/sentiment-analyis-data/live'):
+              out_dir='s3://sentiment-analyis-data/live'):
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -39,7 +39,7 @@ def run_model(data_sample,
 
 def run_shadow_model(data_sample, 
                      model_name="cardiffnlp/twitter-roberta-base-sentiment", 
-                     out_dir='s3://experimental/sentiment-analyis-data/shadow'):
+                     out_dir='s3://sentiment-analyis-data/shadow'):
                      
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
