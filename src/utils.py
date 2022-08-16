@@ -14,7 +14,7 @@ def save_res(res_dict, out_dir, mode):
 
 
 def run_model(data_sample, 
-              model_name="distilbert-base-uncased-finetuned-sst-2-english"
+              model_name="distilbert-base-uncased-finetuned-sst-2-english",
               out_dir='s3://experimental/sentiment-analyis-data/live'):
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
