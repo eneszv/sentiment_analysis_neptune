@@ -30,7 +30,7 @@ def run_model(data_sample,
             
         pred = logits.argmax().item()
         res_dict['pred'].append(pred)
-        res_dict['act'].append(data_sample['label'][i])
+        res_dict['act'].append(data_sample['labels'][i])
         
     save_res(res_dict, out_dir, 'live')
     
@@ -57,7 +57,7 @@ def run_shadow_model(data_sample,
             pred = 1
 
         res_dict['pred'].append(pred)
-        res_dict['act'].append(data_sample['label'][i])
+        res_dict['act'].append(data_sample['labels'][i])
         
     save_res(res_dict, out_dir, 'shadow')
     
