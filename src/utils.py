@@ -10,7 +10,8 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 def save_res(res_dict, out_dir, mode):
     
     time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    df = pd.DataFrame(os.path.join(out_dir, f'{mode}_pred_{time}.csv'))
+    df = pd.DataFrame(res_dict)
+    df.to_csv(os.path.join(out_dir, f'{mode}_pred_{time}.csv'), index=False)
 
 
 def run_model(data_sample, 
